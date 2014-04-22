@@ -14,22 +14,12 @@
 -->
 
 DDB.Search = OpenLayers.Class(OpenLayers.Control, {
-    $template : $('<div id="apisearch"><form>'+
-                    '<input id="apisearchinput" type="text" placeholder="Was?" /><br />'+
-                    '<input id="apisearchbutton" class="button" type="submit" value="Finde POIs" />'+
-                    '<p>'+
-                    '<label for="apisearchfiltercheck">Filter?</label>'+
-                    '<input id="apisearchfiltercheck" type="checkbox" name="filtercheckbox"/> <br />'+
-                    '<label for="amount">Datum:</label>'+
-                    '<input type="text" id="amount" style="border:0; color:#a5003b; font-weight:bold;" />'+
-                    '</p>'+
-                    '<div id="slider-range"></div>'+
-                    '</form></div>'),
-
     initialize : function(options) {
         OpenLayers.Control.prototype.initialize.apply(this, [options]);
         $(this.div).html()
-        $(this.div).append(this.$template)
+        $("#search-things").click(function(){
+            $("#search_form").submit();
+        })
         $("#slider-range").slider({
             range: true,
             min: DDB.globals['minyear'],
@@ -37,12 +27,19 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
             values: [DDB.globals['minyear'], DDB.globals['maxyear']],
             slide: function (event, ui) {
                 $("#amount").val(ui.values[0] + " - " + ui.values[1]);
+            },
+            stop: function( event, ui ) {
+                $("#search_form").submit();
             }
+        });
+        $("#apisearchfiltercheck").change(function(){
+            $("#search_form").submit();
         });
         $("#amount").val($("#slider-range").slider("values", 0) +
             " - " + $("#slider-range").slider("values", 1));
         var self = this;
-        $("#apisearch form").submit(function(){
+        $("#search_form").submit(function(){
+            $('#ajax-loader').fadeIn(50);
             self.api_search.call(self);
             return false;
         })
@@ -267,6 +264,7 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
 
         $.get(DDB.globals.search_url, params, function(data){
             self.api_search_callback.call(self, data, rc)
+            $('#ajax-loader').fadeOut(50);
         })
     },
     api_search_callback: function(d, rc){

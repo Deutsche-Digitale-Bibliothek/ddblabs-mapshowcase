@@ -8,7 +8,6 @@ html, body, #map {
     padding: 0 !important;
 }
 #panel {
-    background-color: #333333 !important;
     color: #333333;
     display: none;
     height: 100%;
@@ -17,10 +16,9 @@ html, body, #map {
     position: absolute;
     top: 0;
     width: 310px;
-    z-index: 1020;            
+    z-index: 1020;
 }
 #panel_content {
-    background-color: #43A2CA !important;
 }
 #panel_switch {
     left: 0px;
@@ -43,6 +41,7 @@ html, body, #map {
     overflow-x: hidden !important;
     overflow-y: scroll !important;
     position: relative;
+    background: white !important;
 }
 #tabs {
     bottom: 0;
@@ -50,6 +49,7 @@ html, body, #map {
     position: absolute;
     right: 0;
     top: 0;
+    background: white !important;
 }
 .olControlPanZoomBar {
     top: 40px !important;

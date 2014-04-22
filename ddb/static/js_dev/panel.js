@@ -20,16 +20,13 @@ function initialize_panel() {
     $(".accordion").accordion({
         collapsible : true,
         heightStyle : "content",
-        active : false,
-        activate : function(event, ui) {
-            $(".ui-button-icon-primary").css({
-                'width' : '24px',
-                'height' : '24px',
-                'top' : '16px'
-            });
-        }
+        active : 0,
     });
-    $("#accordion_map").accordion("option", "active", 0);
+    $(".ui-widget-content").css({
+        'background' : 'white',
+    });
+
+
     $("#panel_switch").click(function() {
         $("#panel_switch").hide();
         $("#panel").toggle("slide", 400, function() {
@@ -47,8 +44,6 @@ function initialize_panel() {
             }
         });
     });
-    //$("#ask_rome2rio").button();
-    //$("#submit_search").button();
 
     var panel_show = '<li class="ui-state-default ui-corner-all" title="show panel" style="list-style-type:none;"><span class="ui-icon ui-icon-circle-arrow-e"></span></li>';
     var panel_hide = '<li class="ui-state-default ui-corner-all" title="hide panel" style="list-style-type:none;"><span class="ui-icon ui-icon-circle-arrow-w"></span></li>';

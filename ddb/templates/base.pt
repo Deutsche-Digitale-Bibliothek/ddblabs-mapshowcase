@@ -79,48 +79,76 @@
         <div id="panel_content">
             <div id="tabs">
                 <span style="margin-left:14px;"><img src="${request.route_url('static', subpath='img/ddblogo.png')}" width="287" height="49" alt="DDB Logo" /></span>
-                <ul>
-                    <li><a class="panel_tab" href="#tabs-map">Karte</a></li>
-                    <li><a class="panel_tab" href="#tabs-help">Hilfe</a></li>
-                    <li><a class="panel_tab" href="#tabs-impress">Impressum</a></li>
-                </ul>
-                <div id="tab-container">
-
-                    <div id="tabs-map">
-                        <div id="accordion_map" class="accordion">
-                            <h3>Suche</h3>
-
-                            <div class="button-list">
-                                <div id="nominatimsearch" class="button-list">
-                                    <input id="nominatiminput" type="text" placeholder="Wo?"/><br/>
-                                    <input id="nominatimbutton" type="button" class="button" value="Finde Orte"/>
-
-                                    <div id="ajax-loader">
-                                        <img src="${request.route_url('static', subpath='img/ajax-loader.gif')}" alt="AJAX Loading Gif" />
-                                    </div>
-                                    <ul id="nominatimresultlist"></ul>
-                                </div>
-                                <div id="ddbsearch" class="button-list"></div>
-
+                <div id="tabs-map">
+                    <div id="accordion_map" class="accordion">
+                        <h3>Suche</h3>
+                        <div class="button-list">
+                            <div id="nominatimsearch" class="button-list">
+                                <form id="search_form">
+                                <table>
+                                    <thead>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td><input id="nominatiminput" type="text" placeholder="Wo?"/></td>
+                                        <td>
+                                            <img height="20px" id="search-places" src="${request.route_url('static', subpath='img/search.png')}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <ul id="nominatimresultlist">
+                                                <li>Nichts</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input id="apisearchinput" type="text" placeholder="Was?" />
+                                        </td>
+                                        <td>
+                                            <img height="20px" id="search-things" src="${request.route_url('static', subpath='img/search.png')}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <label for="amount">Erbaut im Jahr:</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <input type="text" id="amount" style="border:0; color:#a5003b; font-weight:bold;" />
+                                            <div id="slider-range"></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="apisearchfiltercheck">Zeige alle Einträge</label>
+                                        </td>
+                                        <td>
+                                            <input id="apisearchfiltercheck" type="checkbox" name="filtercheckbox"/>
+                                        </td>
+                                    </tr>
+                                   </tbody>
+                                </table>
+                                </form>
                             </div>
-                            <h3>Karteneinstellungen</h3>
-                            <div class="button-list">
-                                <input type="checkbox" id="toogle-osm-mapnick"/><label for="toogle-osm-mapnick">OpenStreetMap - Mapnick</label>
-                                <br />
-                                <input type="checkbox" id="toogle-osm-worldwide"/><label for="toogle-osm-worldwide">OpenStreetMap - Worldwide</label>
-                                <br />
-                                <input type="checkbox" id="toogle-osm-hillshade"/><label for="toogle-osm-hillshade">OpenStreetMap - Hillshade</label>
+                            <div id="ajax-loader">
+                                <img src="${request.route_url('static', subpath='img/ajax-loader.gif')}" alt="AJAX Loading Gif" />
                             </div>
+
                         </div>
-                    </div>
-                    <div id="tabs-help">
-                        <h3>Hilfe</h3>
-                    </div>
-                    <div id="tabs-impress">
+                        <h3>Karteneinstellungen</h3>
+                        <div class="button-list">
+                            <input type="checkbox" id="toogle-osm-mapnick"/><label for="toogle-osm-mapnick">OpenStreetMap - Mapnick</label>
+                            <br />
+                            <input type="checkbox" id="toogle-osm-worldwide"/><label for="toogle-osm-worldwide">OpenStreetMap - Worldwide</label>
+                            <br />
+                            <input type="checkbox" id="toogle-osm-hillshade"/><label for="toogle-osm-hillshade">OpenStreetMap - Hillshade</label>
+                        </div>
                         <h3>Impressum</h3>
-
                         <div>
-                            <tal:block metal:use-macro="load: impressum.pt"></tal:block>
+                            Sie finden unser Impressum unter folgendem Link: <br /><a href="https://www.deutsche-digitale-bibliothek.de/content/publisher/">https://www.deutsche-digitale-bibliothek.de/content/publisher/</a>
                         </div>
                     </div>
                 </div>

@@ -12,18 +12,6 @@ var NominatimController = OpenLayers.Class(OpenLayers.Control, {
         this.response= function(){
             self.requestResponse.apply(self, arguments)
         }
-        this.$div.append(
-            "<iframe id='responseNominatim' name='responseNominatim' style='display:none'></iframe>"+
-            "<form target='responseNominatim' action='" + DDB.globals['nominatim_url'] + "'>"+
-            "<input name='q' value='' type='text'/>"+
-            "<input type='hidden' name='json_callback' value='"+this.object_name+".response' />" +
-            "<input type='hidden' name='format' value='json' />" +
-            "<input type='hidden' name='countrycodes' value='de,ch,cz,at,sk,rs,hu,ro,hr,bg'/>" +
-            "<input type='hidden' name='limit' value='10' />" +
-            "<input type='hidden' name='polygon' value='0' />" +
-            "<input type='hidden' name='addressdetails' value='1' />" +
-        "<input type='submit' id='submit_search' value='Find place...' class='nominatim_submit_search'/>");
-
         this.$result_list = $("#"+options.result_div);
         this.$result_list.append("<ul>")
         this.$queryInput = this.$div.find("form").find("[name=q]")

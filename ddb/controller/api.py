@@ -139,7 +139,7 @@ class ApiController(CommonController):
             .filter(Poi.ddbid.in_(ids.keys())).order_by(Poi.ddbid)
 
         #Add a filter
-        if (self.request.GET.getone('filtercheckbox') == u'true'):
+        if not (self.request.GET.getone('filtercheckbox') == u'true'):
             #Getting all objects within the BBOX that are listed in ids filtered by filterparams
             filters = self.request.GET.getone('filterdatum').split(' ')
             filtered_pois = filtered_pois.filter(Poi.year.between(filters[0],filters[2]))
@@ -345,5 +345,3 @@ class ApiController(CommonController):
             return request.json()
         else:
             return {}
-
-

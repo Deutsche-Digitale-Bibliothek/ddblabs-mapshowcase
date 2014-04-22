@@ -25,7 +25,7 @@ $(function() {
            ), 13);
         $("#nominatimresultlist").slideUp();
     });
-    $("#nominatimbutton").click(function () {
+    $("#search-places").click(function () {
         var geoCodeURL = DDB.globals['nominatim_url']
         var query = $('#nominatiminput').prop('value');
         $('#ajax-loader').fadeIn(50);
@@ -40,9 +40,8 @@ $(function() {
                 q: query
             },
             success: function (data) {
-                console.log(data);
                 $('#ajax-loader').fadeOut(50);
-                $('#nominatimresultlist').empty()
+                $('#nominatimresultlist').empty().removeClass();
                 $.map(data, function (item) {
                     $('#nominatimresultlist').append('<li class="nominatim-listitem" lat=\'' + item.lat + '\' lon=\'' + item.lon + ' \'>' + item.display_name + '</li>');
                 });
