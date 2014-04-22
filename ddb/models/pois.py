@@ -1,0 +1,34 @@
+# encoding=utf8
+
+# Copyright 2014 in medias res Gesellschaft fuer Informationstechnologie mbH
+# The ddb project licenses this file to you under the Apache License,
+# version 2.0 (the "License"); you may not use this file except in compliance
+# with the License. You may obtain a copy of the License at:
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+
+from geoalchemy2 import Geometry
+from ddb.models.base import Base
+from sqlalchemy import Column, Integer, String
+
+
+class Poi(Base):
+    """
+    SQL Alchemy class
+
+    Representation the db structure for the additional poi info table
+    """
+
+    __tablename__ = "ogrgeojson"
+    ogc_fid = Column(Integer, primary_key=True)
+    geom_3857   = Column(Geometry(geometry_type="Point", dimension=2, srid=3857))
+    ddbid = Column(String())
+    type = Column(String())
+    year = Column(Integer)
+

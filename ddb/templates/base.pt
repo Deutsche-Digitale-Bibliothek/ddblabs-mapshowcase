@@ -1,0 +1,142 @@
+<!--!
+# Copyright 2014 in medias res Gesellschaft fuer Informationstechnologie mbH
+# The ddb project licenses this file to you under the Apache License,
+# version 2.0 (the "License"); you may not use this file except in compliance
+# with the License. You may obtain a copy of the License at:
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+-->
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+<head>
+    <title>DDB API Showcase</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="${request.route_url('static', subpath='lib/jquery/jquery.min.js')}"></script>
+    <script type="text/javascript"
+            src="${request.route_url('static', subpath='lib/jquery-ui-1.10.3/ui/minified/jquery-ui.min.js')}"></script>
+    <script src="${request.route_url('static', subpath='js_dev/init_namespace.js')}"></script>
+    <metal:scripts metal:define-slot="scripts"></metal:scripts>
+    <script type="text/javascript">
+                <tal:script metal:use-macro="load: globals.js.pt"></tal:script>
+
+    </script>
+    <link rel="stylesheet"
+          href="${request.route_url('static', subpath='lib/ol/theme/default/style.css')}"
+          type="text/css"/>
+    <link rel="stylesheet"
+          href="${request.route_url('static', subpath='lib/jquery-ui-1.10.3/css/start-new/jquery-ui-1.10.3.custom.css')}"
+          type="text/css"/>
+    <link rel="stylesheet"
+          href="${request.route_url('static', subpath='css/map.css')}"
+          type="text/css"/>
+    <link rel="stylesheet"
+          href="${request.route_url('static', subpath='css/sidebar.css')}"
+          type="text/css"/>
+    <style type="text/css">
+        @font-face {
+            font-family: 'ddb';
+            src: url('${request.route_url('static', subpath='fonts/font.eot')}');
+            src: local('☺'),
+            url('${request.route_url('static', subpath='fonts/font.woff')}') format('woff'),
+            url('${request.route_url('static', subpath='fonts/font.ttf')}') format('truetype'),
+            url('${request.route_url('static', subpath='fonts/font.svg')}') format('svg');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * {
+            font-family:'ddb', Sans-Serif, sans;
+            font-size:12px;
+        }
+
+        a:link {
+            text-decoration:none;
+        }
+
+        #myPopup_contentDiv {
+            background-color:#E6E6E6;
+            color: #222222;
+        }
+
+        h1 {
+           color: #A5003B;
+        }
+    </style>
+    <metal:styles metal:define-slot="styles"/>
+</head>
+<body>
+    <div id="panel">
+        <div id="panel_content">
+            <div id="tabs">
+                <span style="margin-left:14px;"><img src="${request.route_url('static', subpath='img/ddblogo.png')}" width="287" height="49" alt="DDB Logo" /></span>
+                <ul>
+                    <li><a class="panel_tab" href="#tabs-map">Karte</a></li>
+                    <li><a class="panel_tab" href="#tabs-help">Hilfe</a></li>
+                    <li><a class="panel_tab" href="#tabs-impress">Impressum</a></li>
+                </ul>
+                <div id="tab-container">
+
+                    <div id="tabs-map">
+                        <div id="accordion_map" class="accordion">
+                            <h3>Suche</h3>
+
+                            <div class="button-list">
+                                <div id="nominatimsearch" class="button-list">
+                                    <input id="nominatiminput" type="text" placeholder="Wo?"/><br/>
+                                    <input id="nominatimbutton" type="button" class="button" value="Finde Orte"/>
+
+                                    <div id="ajax-loader">
+                                        <img src="${request.route_url('static', subpath='img/ajax-loader.gif')}" alt="AJAX Loading Gif" />
+                                    </div>
+                                    <ul id="nominatimresultlist"></ul>
+                                </div>
+                                <div id="ddbsearch" class="button-list"></div>
+
+                            </div>
+                            <h3>Karteneinstellungen</h3>
+                            <div class="button-list">
+                                <input type="checkbox" id="toogle-osm-mapnick"/><label for="toogle-osm-mapnick">OpenStreetMap - Mapnick</label>
+                                <br />
+                                <input type="checkbox" id="toogle-osm-worldwide"/><label for="toogle-osm-worldwide">OpenStreetMap - Worldwide</label>
+                                <br />
+                                <input type="checkbox" id="toogle-osm-hillshade"/><label for="toogle-osm-hillshade">OpenStreetMap - Hillshade</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tabs-help">
+                        <h3>Hilfe</h3>
+                    </div>
+                    <div id="tabs-impress">
+                        <h3>Impressum</h3>
+
+                        <div>
+                            <tal:block metal:use-macro="load: impressum.pt"></tal:block>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="panel_switch">
+        <div id="panel_switch_symbol"></div>
+    </div>
+    <div id="overview_switch">
+        <div id="overview_switch_symbol"></div>
+    </div>
+    <div id="overview">
+        <div id="overview-map"></div>
+    </div>
+
+    <div id="map"></div>
+</body>
+</html>
