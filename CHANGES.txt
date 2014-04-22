@@ -7,3 +7,8 @@
 ---
 
 - Inital release to github
+
+0.1.1
+---
+
+- Bugfix release for missing libaries due to misconfigured .gitignore file
