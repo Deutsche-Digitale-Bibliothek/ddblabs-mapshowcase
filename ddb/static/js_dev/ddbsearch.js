@@ -47,22 +47,33 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
             return false;
         })
         var style = new OpenLayers.Style({
-                    strokeColor : "#000000",
-                    strokeWidth : 0,
-                    strokeOpacity : 0.7,
-                    fillColor : "${getColor}",
-                    fillOpacity : 0.8,
-                    pointRadius : "${getRadius}",
+                    strokeColor   : "rgb(165,0,59)",
+                    strokeWidth   : 2,
+                    strokeOpacity : 1.0,
+                    fillColor     : "rgb(240,99,115)",
+                    fillOpacity   : 0.4,
+                    pointRadius   : "${getRadius}",
                 },{
                     context : {
                         getRadius : function(feature){
-                            return (7-2.3/feature.data.count) * 1.4;
-                        },
-                        getColor: function(feature){
-                            if (feature.data.count > 1.0){
-                                return "#A5003B";
+                            if (feature.data.count == 1) {
+                              return "4px";
                             }
-                            else return "#FF0000"
+                            else if (feature.data.count <= 5) {
+                              return "5px";
+                            }
+                            else if (feature.data.count <= 50) {
+                              return "6px";
+                            }
+                            else if (feature.data.count <= 100) {
+                              return "8px";
+                            }
+                            else if (feature.data.count <= 200) {
+                              return "10px";
+                            }
+                            else  {
+                              return "13px";
+                            }
                         }
                     }
                 })
