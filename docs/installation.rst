@@ -18,7 +18,8 @@ Getting started
 ~~~~~~~~~~~~~~~
 
 - create a new postgis-enabled database on your Postgres server
-- import the databasefile into the new database (assets/database.sql)
+- (optional) transform the GeoJSON file (assets/database.json) to SQL (using GDAL/ogr2ogr)
+- import the generated or sample SQL (database-sample.sql) into the new database
 - create a python virtual environment
     - `virtualenv $venvpath`
 - install this python package
