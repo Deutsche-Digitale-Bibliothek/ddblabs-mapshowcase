@@ -97,7 +97,7 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
                                 evt.feature.geometry.y
                     );
 
-                    var html = 'POIs: <br />'
+                    var html = '';
 
                     if (l.length == 1) {
                         html = $.ajax({
@@ -110,7 +110,7 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
                                 var popup = new OpenLayers.Popup.Anchored(
                                     'myPopup',
                                     lonlat,
-                                    new OpenLayers.Size(250, 250),
+                                    new OpenLayers.Size(350, 250),
                                     data,
                                     {size: {w: 14, h: 14}, offset: {x: -7, y: -7}},
                                     false
@@ -121,13 +121,18 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
                         }
                         })
                     } else {
+                        html += '<table>';
                         for (i=0;i<l.length;i++){
-                            html += '<a href="'+ DDB.globals['apiitem_url'] + l[i][0] + '" target="_blank">' + l[i][1] + '</a><br />';
+                            html += '<tr>';
+                            html += '<td><img src="'+ DDB.globals['ddb_arrow'] +'" /></td>';
+                            html += '<td><a href="'+ DDB.globals['apiitem_url'] + l[i][0] + '" target="_blank" class="label">' + l[i][1] + '</a></td>';
+                            html += '</tr>';
                         }
+                        html += '</table>';
                         var popup = new OpenLayers.Popup.Anchored(
                             'myPopup',
                             lonlat,
-                            new OpenLayers.Size(250, 250),
+                            new OpenLayers.Size(350, 250),
                             html,
                             {size: {w: 14, h: 14}, offset: {x: -7, y: -7}},
                             false

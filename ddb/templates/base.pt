@@ -62,7 +62,16 @@
         a:link {
             text-decoration:none;
         }
-
+        a {
+            color: #3E3A37;
+            text-decoration: none;
+            word-wrap: break-word;
+        }
+        a:hover {
+            color: #A5003B;
+            cursor: pointer;
+            text-decoration: none;
+        }
         #myPopup_contentDiv {
             background-color:#E6E6E6;
             color: #222222;

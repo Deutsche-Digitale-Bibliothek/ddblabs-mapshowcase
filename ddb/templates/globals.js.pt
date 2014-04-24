@@ -19,6 +19,6 @@ DDB.globals = {
   apiitem_url : "${request.registry.settings.get('apiitem_url')}",
   nominatim_url : "${request.registry.settings.get('nominatim_url')}",
   minyear : 1,
-  maxyear : 2011
-
+  maxyear : 2011,
+  ddb_arrow : "${request.route_url('static', subpath='img/ddb-arrow.png')}",
 }
