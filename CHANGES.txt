@@ -12,3 +12,10 @@
 ---
 
 - Bugfix release for missing libaries due to misconfigured .gitignore file
+
+0.2
+---
+
+- Reworked panel layout
+- Reworked cluster style and quantization
+- Reworked popup window on clusters
