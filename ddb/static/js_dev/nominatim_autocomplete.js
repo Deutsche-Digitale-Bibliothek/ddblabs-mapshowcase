@@ -14,7 +14,6 @@
 -->
 
 $(function() {
-    $("#nominatimresultlist").slideUp();
     $("#nominatimresultlist").on( 'click', ".nominatim-listitem", function() {
         var lat = $(this)[0].attributes.getNamedItem('lat').nodeValue;
         var lon = $(this)[0].attributes.getNamedItem('lon').nodeValue;
@@ -42,10 +41,12 @@ $(function() {
             success: function (data) {
                 $('#ajax-loader').fadeOut(50);
                 $('#nominatimresultlist').empty().removeClass();
-                $.map(data, function (item) {
-                    $('#nominatimresultlist').append('<li class="nominatim-listitem" lat=\'' + item.lat + '\' lon=\'' + item.lon + ' \'>' + item.display_name + '</li>');
-                });
-                $('#nominatimresultlist').slideDown();
+                if (data.length > 0) {
+                    $.map(data, function (item) {
+                        $('#nominatimresultlist').append('<li class="nominatim-listitem" lat=\'' + item.lat + '\' lon=\'' + item.lon + ' \'>' + item.display_name + '</li>');
+                    });
+                    $('#nominatimresultlist').slideDown();
+                }
             }
         })
     });

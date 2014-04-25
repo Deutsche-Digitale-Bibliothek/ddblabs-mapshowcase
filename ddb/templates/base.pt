@@ -106,8 +106,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            <ul id="nominatimresultlist">
-                                                <li>Nichts</li>
+                                            <ul id="nominatimresultlist" style="display:none;">
                                             </ul>
                                         </td>
                                     </tr>
