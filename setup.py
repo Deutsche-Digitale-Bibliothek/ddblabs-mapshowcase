@@ -35,7 +35,7 @@ requires = [
     ]
 
 setup(name='ddb',
-      version='0.2',
+      version='0.3',
       description='ddb map showcase',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[

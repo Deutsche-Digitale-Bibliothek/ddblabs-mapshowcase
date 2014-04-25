@@ -19,3 +19,9 @@
 - Reworked panel layout
 - Reworked cluster style and quantization
 - Reworked popup window on clusters
+
+0.3
+---
+
+- Added datasource files
+- Fixed GUI glitches
