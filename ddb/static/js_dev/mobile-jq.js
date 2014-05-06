@@ -1,8 +1,13 @@
 // Start with the map page
 window.location.replace(window.location.href.split("#")[0] + "#mappage");
 
+var gg = new OpenLayers.Projection("EPSG:4326");
+var sm = new OpenLayers.Projection("EPSG:900913");
 var selectedFeature = null;
-
+jQuery(document).on("mobileinit", function() {
+    jQuery.mobile.autoInitializePage = false;
+});
+loaded = false;
 // fix height of content
 function fixContentHeight() {
     var footer = $("div[data-role='footer']:visible"),
@@ -19,91 +24,95 @@ function fixContentHeight() {
         map.updateSize();
     } else {
         // initialize map
-        init(function(feature) {
+        if (!loaded) {
+            initialize_map();
+            initLayerList();
+            loaded = true
+        }
+        /*init(function(feature) {
             selectedFeature = feature;
             $.mobile.changePage("#popup", "pop");
-        });
-        initLayerList();
+        });*/
     }
 }
-
-// one-time initialisation of button handlers
-
-$("#plus").live('click', function(){
-    map.zoomIn();
-});
-
-$("#minus").live('click', function(){
-    map.zoomOut();
-});
-
-$("#locate").live('click',function(){
-    var control = map.getControlsBy("id", "locate-control")[0];
-    if (control.active) {
-        control.getCurrentLocation();
-    } else {
-        control.activate();
-    }
-});
-
-//fix the content height AFTER jQuery Mobile has rendered the map page
-$('#mappage').live('pageshow',function (){
-    fixContentHeight();
-});
-
-$(window).bind("orientationchange resize pageshow", fixContentHeight);
-
-
-
-$('#popup').live('pageshow',function(event, ui){
-    var li = "";
-    for(var attr in selectedFeature.attributes){
-        li += "<li><div style='width:25%;float:left'>" + attr + "</div><div style='width:75%;float:right'>"
-        + selectedFeature.attributes[attr] + "</div></li>";
-    }
-    $("ul#details-list").empty().append(li).listview("refresh");
-});
-
-$('#searchpage').live('pageshow',function(event, ui){
-    $('#query').bind('change', function(e){
+$(function(){
+    // one-time initialisation of button handlers
+    
+    $("#plus").on('click', function(){
+        //DDB.map.zoomIn.call(DDB.map);
+        DDB.map.setCenter(null, DDB.map.getZoom()+1);
+        var zoom = DDB.map.getZoom() + 1//(DDB.map.getNumZoomLevels() - 1) - levels; 
+        zoom = Math.min(Math.max(zoom, 0), DDB.map.getNumZoomLevels() - 1);
+        DDB.map.zoomTo(zoom);
+    });
+    
+    $("#minus").on('click', function(){
+        DDB.map.zoomOut.call(DDB.map);
+    });
+    
+    $("#locate").on('click',function(){
+        var control = DDB.map.getControlsBy("id", "locate-control")[0];
+        if (control.active) {
+            control.getCurrentLocation();
+        } else {
+            control.activate();
+        }
+    });
+    
+    //fix the content height AFTER jQuery Mobile has rendered the map page
+    $('#mappage').on('pageshow',function (){
+        fixContentHeight();
+    });
+    
+    $(window).bind("orientationchange resize pageshow", fixContentHeight);
+    
+    
+    
+    /*$('#popup').on('pageshow',function(event, ui){
+        var li = "";
+        for(var attr in selectedFeature.attributes){
+            li += "<li><div style='width:25%;float:left'>" + attr + "</div><div style='width:75%;float:right'>"
+            + selectedFeature.attributes[attr] + "</div></li>";
+        }
+        $("ul#details-list").empty().append(li).listview("refresh");
+    });*/
+    
+    $('#search_places').on('click',function(event, ui){
         $('#search_results').empty();
         if ($('#query')[0].value === '') {
             return;
         }
-        $.mobile.showPageLoadingMsg();
-
+        //$.mobile.showPageLoadingMsg();
         // Prevent form send
-        e.preventDefault();
-
-        var searchUrl = 'http://ws.geonames.org/searchJSON?featureClass=P&maxRows=10';
-        searchUrl += '&name_startsWith=' + $('#query')[0].value;
+        event.preventDefault();
+        var searchUrl = 'http://nominatim.openstreetmap.org/search?limit=10&format=json&email=info%40webgis.de&bounded=1&viewbox=7.7447%2C+51.6721%2C+10.252%2C+49.3856';
+        searchUrl += '&q=' + $('#query')[0].value;
         $.getJSON(searchUrl, function(data) {
-            $.each(data.geonames, function() {
+            $.each(data, function() {
                 var place = this;
                 $('<li>')
                     .hide()
                     .append($('<h2 />', {
-                        text: place.name
+                        text: place.display_name
                     }))
-                    .append($('<p />', {
-                        html: '<b>' + place.countryName + '</b> ' + place.fcodeName
-                    }))
+                    //.append($('<p />', {
+                     //   html: '<b>' + place.countryName + '</b> ' + place.fcodeName
+                    //}))
                     .appendTo('#search_results')
                     .click(function() {
                         $.mobile.changePage('#mappage');
                         var lonlat = new OpenLayers.LonLat(place.lng, place.lat);
-                        map.setCenter(lonlat.transform(gg, sm), 10);
+                        var bb = place.boundingbox;
+                        DDB.map.zoomToExtent(new OpenLayers.Bounds(bb[2],bb[0],bb[3],bb[1]).transform(DDB.geographic, DDB.map.getProjectionObject()))
+                        DDB.map.setCenter(lonlat.transform(gg, sm), 10);
                     })
                     .show();
             });
             $('#search_results').listview('refresh');
-            $.mobile.hidePageLoadingMsg();
+            //$.mobile.hidePageLoadingMsg();
         });
     });
-    // only listen to the first event triggered
-    $('#searchpage').die('pageshow', arguments.callee);
 });
-
 
 function initLayerList() {
     $('#layerspage').page();
@@ -112,23 +121,27 @@ function initLayerList() {
             text: "Base Layers"
         })
         .appendTo('#layerslist');
-    var baseLayers = map.getLayersBy("isBaseLayer", true);
-    $.each(baseLayers, function() {
-        addLayerToList(this);
-    });
+    for (layer_idx in DDB.map.layers) {
+        var layer = DDB.map.layers[layer_idx]
+        if (layer.isBaseLayer && layer.displayInLayerSwitcher) {
+            addLayerToList(layer);
+        }
+    }
 
     $('<li>', {
             "data-role": "list-divider",
             text: "Overlay Layers"
         })
         .appendTo('#layerslist');
-    var overlayLayers = map.getLayersBy("isBaseLayer", false);
-    $.each(overlayLayers, function() {
-        addLayerToList(this);
-    });
+   for (layer_idx in DDB.map.layers) {
+        var layer = DDB.map.layers[layer_idx]
+        if (!layer.isBaseLayer && layer.displayInLayerSwitcher) {
+            addLayerToList(layer);
+        }
+    }
     $('#layerslist').listview('refresh');
 
-    map.events.register("addlayer", this, function(e) {
+    DDB.map.events.register("addlayer", this, function(e) {
         addLayerToList(e.layer);
     });
 }

@@ -26,7 +26,10 @@ function initialize_map() {
     })
     window.nominatimController = DDB.nominatimController
     DDB.osm = new OpenLayers.Layer.OSM(
-        "OpenStreetMap", null,
+        "DDB Karte", [
+            "http://a.tile.maps.deutsche-digitale-bibliothek.de/${z}/${x}/${y}.png",
+            "http://maps.deutsche-digitale-bibliothek.de/${z}/${x}/${y}.png"
+        ],
         {
             numZoomLevels: 18,
             maxZoomLevel: 17,
@@ -36,16 +39,32 @@ function initialize_map() {
         }
     );
     DDB.map = new OpenLayers.Map({
-        div: "map",
+        div: document.getElementById("map"),
         controls: [
             new OpenLayers.Control.Navigation({
-                dragPanOptions: {
+                /*dragPanOptions: {
                     enableKinetic: false
-                }
+                }*/
             }),
+            new OpenLayers.Control.Attribution(),
+            DDB.nominatimController,
+        ],
+        transitionEffect: null,
+        zoomMethod: null,
+        zoomDuration: 10,
+        numZoomLevels: 22,
+        layers:[DDB.osm],
+        projection: DDB.mercator,
+        displayProjection: DDB.geographic,
+        units: 'm'
+    });
+    DDB.map.updateSize()
+    //  alert(DDB.map.layers.length);
+    DDB.map.addControl(new DDB.Search({div:document.getElementById("ddbsearch")}))
+    if (!DDB.globals.mobile) {
+        DDB.map.addControls([
             new OpenLayers.Control.PanZoomBar(),
             new OpenLayers.Control.ScaleLine(),
-            new OpenLayers.Control.Attribution(),
             new OpenLayers.Control.Permalink(),
             new OpenLayers.Control.MousePosition(),
             new OpenLayers.Control.OverviewMap({
@@ -57,29 +76,19 @@ function initialize_map() {
                     maxExtent: DDB.bounds,
                     restrictedExtent: DDB.bounds
                 }
-            }),
-            DDB.nominatimController,
-            new DDB.Search({div:document.getElementById("ddbsearch")})
-        ],
-        transitionEffect: null,
-        zoomMethod: null,
-        zoomDuration: 10,
-        numZoomLevels: 22,
-        projection: DDB.mercator,
-        displayProjection: DDB.geographic,
-        units: 'm'
-    });
-    DDB.map.addLayer(DDB.osm);
+            })
+        ])
+    }
     if (!DDB.map.getCenter()) {
         DDB.map.zoomToExtent(DDB.initial_bounds);
     }
-    DDB.poivectorlayer = new OpenLayers.Layer.Vector({
+    DDB.poivectorlayer = new OpenLayers.Layer.Vector("poi_vector",{
+        displayInLayerSwitcher:false,
         isBaseLayer: false,
         visibility: true
     })
     DDB.map.addLayer(DDB.poivectorlayer);
     DDB.map.setCenter(DDB.center, 8);
-
     DDB.hillshade = new OpenLayers.Layer.WMS(
         "Hillshade",
         "http://129.206.228.72/cached/hillshade",
@@ -87,21 +96,22 @@ function initialize_map() {
             "layers": "europe_wms:hs_srtm_europa",
             "transparent":"true",
             "format":"image/png",
-            "isBaseLayer":"false"
+        },{
+            isBaseLayer:false,
+            displayInLayerSwitcher:true
         }
     )
     DDB.hillshade.setOpacity(0.23);
     DDB.hillshade.setVisibility(false);
     DDB.map.addLayer(DDB.hillshade);
-
     DDB.osmworld = new OpenLayers.Layer.WMS(
-            "OSM - Worldwide",
-            "http://129.206.228.72/cached/osm",
-            {
-                layers: "osm_auto:all",
-                "isBaseLayer":"false"
-            }
-            )
+        "OSM - Worldwide",
+        "http://129.206.228.72/cached/osm",
+        {
+            layers: "osm_auto:all",
+            isBaseLayer:true
+        }
+    )
     DDB.osmworld.setVisibility(false);
     DDB.map.addLayer(DDB.osmworld);
 

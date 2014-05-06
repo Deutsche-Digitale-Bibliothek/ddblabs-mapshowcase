@@ -82,7 +82,9 @@ class ApiController(CommonController):
             'oauth_consumer_key':self.request.registry.settings['oauth_key'],
             'facet':'provider_fct', #hardcoded
             'provider_fct':u'Landesamt für Denkmalpflege Hessen', #hardcoded
-            'query': query
+            'query': query,
+            'sort': 'RELEVANCE',
+            'offset': 1000,
         }
 
         #Prepare for paging
@@ -226,7 +228,7 @@ class ApiController(CommonController):
             bbox = dict(min_y=bbox[1], min_x =bbox[0], max_y = bbox[3], max_x =bbox[2])
 
             resolution = float(self.request.GET['resolution']) #611.4962261962891
-            radius = 40
+            radius = int(self.request.GET.get('radius', 40))
 
             request = self._api_search(**params)
             if request and request.ok:

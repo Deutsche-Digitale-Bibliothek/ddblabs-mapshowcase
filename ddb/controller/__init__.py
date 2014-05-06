@@ -27,10 +27,10 @@ class CommonController(object):
 
 @subscriber(ContextFound)
 def browser_detection(event):
-    if not event.request.session.has_key('browserdetection') or event.request.session['browserdetection'] != None:
+    if not(event.request.session.has_key('browserdetection')) or event.request.session.get('browserdetection') == None:
         browser = detect(event.request.user_agent, fill_none=True)
         try:
-            if browser['os']['name'] in ['iOS', 'BlackBerry', 'Android']:
+            if browser['platform']['name'] in ['iOS', 'BlackBerry', 'Android']:
                 event.request.session['browserdetection'] = 'mobile'
             else:
                 event.request.session['browserdetection'] = 'normal'

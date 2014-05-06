@@ -2,23 +2,29 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-        <title>OpenLayers with jQuery Mobile</title>
+        <title>DDB Api Showcase mobile</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
 
-        <script src="${request.route_url('static', subpath='lib/jquery/jquery-1.6.4.min.js')}"></script>
-        <script src="${request.route_url('static', subpath='lib/jquery.mobile-1.0.1/jquery.mobile-1.0.1.js')}"></script>
+        <script src="${request.route_url('static', subpath='lib/jquery/jquery.1.11.min.js')}"></script>
+        <script src="${request.route_url('static', subpath='lib/jq_mobile/jquery.mobile-1.4.2.js')}"></script>
 
-        <script src="${request.route_url('static', subpath='lib/ol/OpenLayers.js')}?mobile"></script>
-        <script src="${request.route_url('static', subpath='js_dev/mobile-base.js')}"></script>
-        <script src="${request.route_url('static', subpath='js_dev/mobile-jq.js')}"></script>
-
+        <script src="${request.route_url('static', subpath='lib/ol/OpenLayers.js')}"></script>
+        <script type="text/javascript" src="${request.route_url('static', subpath='js_dev/init_namespace.js')}">
+        </script>
+        <script type="text/javascript">
+            <tal:script metal:use-macro="load: globals.js.pt" />
+            DDB.globals.mobile = true
+        </script>
+        <script type="text/javascript" src="${request.route_url('static', subpath='lib/ol/OpenLayers.debug.js')}"></script>
+        <script type="text/javascript" src="${request.route_url('static', subpath='js_dev/nominatim_controller.js')}"></script>
+        <script type="text/javascript" src="${request.route_url('static', subpath='js_dev/map.js')}"></script>
+        <script type="text/javascript" src="${request.route_url('static', subpath='js_dev/nominatim_autocomplete.js')}"></script>
+        <script type="text/javascript" src="${request.route_url('static', subpath='js_dev/ddbsearch.js')}"></script>
+        <script type="text/javascript" src="${request.route_url('static', subpath='js_dev/mobile-jq.js')}"></script>
+        <link rel="stylesheet" href="${request.route_url('static', subpath='lib/jq_mobile/jquery.mobile-1.4.2.min.css')}" />
         <link rel="stylesheet" href="${request.route_url('static', subpath='css/style.mobile.css')}" type="text/css" />
         <link rel="stylesheet" href="${request.route_url('static', subpath='css/style.mobile-jq.css')}" type="text/css" />
-        <link rel="stylesheet" href="${request.route_url('static', subpath='lib/jquery.mobile-1.0.1/jquery.mobile-1.0.1.css')}" />
-
-
-
     </head>
     <body>
         <h1 id="title">OpenLayers with jQuery Mobile</h1>
@@ -30,33 +36,49 @@
         </p>
 
         <div data-role="page" id="mappage">
-          <div data-role="content">
+          <div id="mappwrapper" data-role="content">
             <div id="map"></div>
           </div>
 
           <div data-role="footer">
-            <a href="#searchpage" data-icon="search" data-role="button">Search</a>
-            <a href="#" id="locate" data-icon="locate" data-role="button">Locate</a>
-            <a href="#layerspage" data-icon="layers" data-role="button">Layers</a>
+            <a href="#searchpage" class="ui-btn ui-icon-search ui-btn-icon-left">Search</a>
+            <!--<a href="#" id="locate" class="ui-btn ui-icon-mobile-locate ui-btn-icon-left">Locate</a>-->
+            <a href="#layerspage" class="ui-btn ui-icon-mobile-layers ui-btn-icon-left" data-role="button">Layers</a>
+            <a href="#impressum" class="ui-btn ui-icon-info ui-btn-icon-left" data-role="button">Impressum</a>
+            
           </div>
-          <div id="navigation" data-role="controlgroup" data-type="vertical">
-            <a href="#" data-role="button" data-icon="plus" id="plus"
-               data-iconpos="notext"></a>
-            <a href="#" data-role="button" data-icon="minus" id="minus"
-               data-iconpos="notext"></a>
+          <div id="navigation" data-role="controlgroup">
+            <a href="#" class="ui-btn ui-icon-plus ui-btn-icon-notext ui-corner-all" id="plus">+</a>
+            <a href="#" class="ui-btn ui-icon-minus ui-btn-icon-notext ui-corner-all" id="minus">-</a>
           </div>
         </div>
-
+        <div data-role="page" id="impressum">
+             Sie finden unser Impressum unter folgendem Link:
+            <br />
+            <a href="http://www.webgis.de/impressum">http://www.webgis.de/impressum</a>
+        </div>
         <div data-role="page" id="searchpage">
           <div data-role="header">
-            <h1>Search</h1>
+            <h1>Suche</h1>
           </div>
           <div data-role="fieldcontain">
             <input type="search" name="query" id="query"
-                   value="" placeholder="Search for places"
+                   value="" placeholder="Suche nach Orten"
                    autocomplete="off"/>
+            
+            <a href="#" id="search_places" class="ui-btn ui-icon-search ui-btn-icon-left">Absenden</a>
           </div>
           <ul data-role="listview" data-inset="true" id="search_results"></ul>
+          <div data-role="fieldcontain">
+            <form id="search_form" action="">
+
+            <input type="search" name="ddbquery" id="ddbquery"
+                   value="" placeholder="Suche in der DDB"
+                   autocomplete="off"/>
+            <a href="#" id="search-things" class="ui-btn ui-icon-search ui-btn-icon-left">Absenden</a>
+            </form>
+          </div>
+          <ul data-role="listview" data-inset="true" id="search_results_ddb"></ul>
         </div>
 
         <div data-role="page" id="layerspage">
@@ -68,14 +90,21 @@
             </ul>
           </div>
         </div>
-
-        <div id="popup" data-role="dialog">
+        <div id="multi-popup" data-role="dialog">
             <div data-position="inline" data-theme="d" data-role="header">
                 <h1>Details</h1>
             </div>
             <div data-theme="c" data-role="content">
-                <ul id="details-list" data-role="listview">
+                <ul id="multi-details-list" data-role="listview">
                 </ul>
+            </div>
+        </div>
+        <div id="popup" data-role="dialog">
+            <div data-position="inline" data-theme="d" data-role="header">
+                <h1>Details</h1>
+            </div>
+            <div data-theme="c" data-role="content" id="multi-details">
+                
             </div>
         </div>
     </body>

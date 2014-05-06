@@ -17,14 +17,14 @@
     <table>
         <tbody>
             <tr>
-                <td><h1 tal:content="structure: item.title"></h1></td>
+                <td colspan="2"><h1 tal:content="structure: item.title"></h1></td>
                 <td><img tal:condition="exists: thumbnail" tal:condition="python: thumbnail != None" tal:attributes="src u'https://www.deutsche-digitale-bibliothek.de/' + thumbnail" src="" /></td>
             </tr>
             <tr>
-                <td colspan="2"><p tal:content="structure: item.label"></p></td>
+                <td colspan="3"><p tal:content="structure: item.label"></p></td>
             </tr>
             <tr>
-                <td colspan="2"><a tal:attributes="href 'https://www.deutsche-digitale-bibliothek.de/item/' + item.id" target="_blank">Zur Detailseite... <img src="${request.route_url('static',subpath='img/ddblogo.png')}" width="200px"/></a></td>
+                <td><img src="${request.route_url('static', subpath='img/ddb-arrow.png')}" /></td><td><a tal:attributes="href 'https://www.deutsche-digitale-bibliothek.de/item/' + item.id" target="_blank"> zum Objekt</a></td><td>&nbsp;</td>
             </tr>
         </tbody>
     </table>

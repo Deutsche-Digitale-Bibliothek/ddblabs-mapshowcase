@@ -14,7 +14,7 @@
 # under the License.
 
 from pyramid.view import view_config, view_defaults
-
+from pyramid.httpexceptions import HTTPFound
 def map_include(config):
     """
     Defining all routes implemented by this controller for inclusion in the app config
@@ -34,7 +34,8 @@ def showmap(context, request):
 
     It renders the linked template with no further options supplied.
     """
-
+    if request.session['browserdetection'] == 'mobile':
+        return HTTPFound(location=request.route_url('map_mobile'))
     return {}
 
 @view_config(route_name='map_mobile', renderer="ddb:templates/mobile.pt")

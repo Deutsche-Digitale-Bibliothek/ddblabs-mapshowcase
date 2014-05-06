@@ -1,3 +1,5 @@
+
+
 html, body, #map {
     width: 100%;
     height: 100%;
@@ -87,3 +89,113 @@ html, body, #map {
     padding: 0 !important;
     z-index: 1011;
 }
+
+* {
+    font-family:'ddb', Sans-Serif, sans;
+    font-size:12px;
+}
+
+a:link {
+    text-decoration:none;
+}
+a {
+    color: #3E3A37;
+    text-decoration: none;
+    word-wrap: break-word;
+}
+a:hover {
+    color: #A5003B;
+    cursor: pointer;
+    text-decoration: underline;
+}
+#ddbpopup_contentDiv {
+    color: #222222;
+    padding: 5px;
+}
+#tablewrapper {
+    overflow:auto !important;
+    padding-top: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+}
+
+h1 {
+   color: #A5003B;
+   font-size:1.2em;
+}
+
+
+/* Popup start */
+
+.olMap img {
+  margin: 0px !important;
+  padding:3px;
+}
+
+.olMap #institutionPopup_GroupDiv {
+}
+
+.olMap .olFramedDDBPopupContent {
+  background-color: #FFFFFF;
+}
+
+.olMap .olPopupCloseBox {
+  background: url("../img/ddb_PopupCancel.png") no-repeat scroll 0 0 !important;
+  width: 20px !important;
+  height: 20px !important;
+  right: 35px !important;
+  top: 17px !important;
+}
+
+.olMap .olPopupDDBContent {
+  margin: 0px 4px 4px 4px;
+}
+
+.olMap .ddbPopupTitle {
+  margin: 5px 5px 5px 5px;
+  height: 20px;
+  font-weight: bold;
+}
+
+.olMap .olPopupDDBBody {
+  margin-top: 5px;
+  padding-bottom: 5px;
+}
+
+.olMap .olPopupDDBScroll {
+  max-height: 150px;
+  width: 300px;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+  /*
+overflow: scroll;
+*/
+  -webkit-overflow-scrolling: touch;
+  /*
+overflow-scrolling: touch;
+overflow: scroll;
+-webkit-overflow-scrolling: touch;
+position: static;
+*/
+}
+
+.olMap .olPopupDDBContent ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.olMap .olPopupDDBContent ul li {
+  background: url("../img/list_arrow_plum.png") no-repeat scroll 0 0 !important;
+  padding-left: 17px;
+}
+
+.olMap .olPopupDDBContent li ul li {
+  background: url("../img/list_arrow_grey.png") no-repeat scroll 0 0 !important;
+  padding-left: 17px;
+}
+
+
+/* Popup end */

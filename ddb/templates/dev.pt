@@ -18,7 +18,8 @@
         <script type="text/javascript" src="${request.route_url('static',
         subpath='js_dev/init_namespace.js')}">
         </script>
-        <script type="text/javascript" src="${request.route_url('static', subpath='lib/ol/OpenLayers.js')}"></script>
+        <script type="text/javascript" src="${request.route_url('static', subpath='lib/ol/OpenLayers.debug.js')}"></script>
+        <script type="text/javascript" src="${request.route_url('static', subpath='js_dev/framed_ddb.js')}"></script>
         <script type="text/javascript" src="${request.route_url('static', subpath='js_dev/nominatim_controller.js')}"></script>
         <script type="text/javascript" src="${request.route_url('static', subpath='js_dev/map.js')}"></script>
         <script type="text/javascript" src="${request.route_url('static', subpath='js_dev/panel.js')}"></script>

@@ -53,24 +53,26 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
                 },{
                     context : {
                         getRadius : function(feature){
+                            var radius = 17;
                             if (feature.data.count == 1) {
-                              return "4px";
+                                radius = 7;
                             }
                             else if (feature.data.count <= 5) {
-                              return "5px";
+                                radius = 9;
                             }
                             else if (feature.data.count <= 50) {
-                              return "6px";
+                                radius = 11;
                             }
                             else if (feature.data.count <= 100) {
-                              return "8px";
+                                radius = 13;
                             }
                             else if (feature.data.count <= 200) {
-                              return "10px";
+                                radius = 15;
                             }
-                            else  {
-                              return "13px";
+                            if (DDB.globals.mobile) {
+                                radius = radius*2;
                             }
+                            return radius
                         }
                     }
                 })
@@ -88,7 +90,7 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
             }),
 
             eventListeners : {
-                featurehighlighted : function(evt){
+                featureselected: function(evt){
                     var f = arguments[0].feature
                     var l = f.data.ids
 
@@ -96,56 +98,100 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
                                 evt.feature.geometry.x,
                                 evt.feature.geometry.y
                     );
+                    if (!DDB.globals.mobile) {
 
-                    var html = '';
+                        var html = '';
 
-                    if (l.length == 1) {
-                        html = $.ajax({
-                            url: DDB.globals['get_url'] +'/'+ l[0][0],
-                            data:{
-                                'format':'html',
-                            },
-                        dataType: 'html',
-                        success: function(data){
-                                var popup = new OpenLayers.Popup.Anchored(
-                                    'myPopup',
+                        if (l.length == 1) {
+                            html = $.ajax({
+                                url: DDB.globals['get_url'] +'/'+ l[0][0],
+                                data:{
+                                    'format':'html',
+                                },
+                            dataType: 'html',
+                            success: function(data){
+                                var popup = new OpenLayers.Popup.FramedDDB(
+                                    'ddbpopup',
                                     lonlat,
-                                    new OpenLayers.Size(350, 250),
+                                    new OpenLayers.Size(450, 350),
                                     data,
-                                    {size: {w: 14, h: 14}, offset: {x: -7, y: -7}},
-                                    false
+                                    null, //{size: {w: 14, h: 14}, offset: {x: -7, y: -7}},
+                                    true,
+                                    function(){
+                                        if (evt.feature.popup) {
+                                            self.selectControl.unselect(evt.feature);
+                                        }
+                                    },
+                                    "./static/img/"
                                 );
 
                                 evt.feature.popup = popup;
                                 DDB.map.addPopup(popup, true);
-                        }
+                            }
                         })
-                    } else {
-                        html += '<table>';
-                        for (i=0;i<l.length;i++){
-                            html += '<tr>';
-                            html += '<td><img src="'+ DDB.globals['ddb_arrow'] +'" /></td>';
-                            html += '<td><a href="'+ DDB.globals['apiitem_url'] + l[i][0] + '" target="_blank" class="label">' + l[i][1] + '</a></td>';
-                            html += '</tr>';
-                        }
-                        html += '</table>';
-                        var popup = new OpenLayers.Popup.Anchored(
-                            'myPopup',
-                            lonlat,
-                            new OpenLayers.Size(350, 250),
-                            html,
-                            {size: {w: 14, h: 14}, offset: {x: -7, y: -7}},
-                            false
-                        );
+                        } else {
+                            html += '<div class="ddbPopupTitle">';
+                            html += l.length
+                            html += ' Ergebnisse</div><div id="tablewrapper"><table>';
+                            for (i=0;i<l.length;i++){
+                                if (i > 15) {
+                                     html += '<tr><td colspan="2">' + (l.length - 15) + ' weitere Ergebnisse.</td></tr>';
+                                    break;
+                                }
+                                html += '<tr>';
+                                html += '<td><img src="'+ DDB.globals['ddb_arrow'] +'" /></td>';
+                                html += '<td><a href="'+ DDB.globals['apiitem_url'] + l[i][0] + '" target="_blank" class="label">' + l[i][1] + '</a></td>';
+                                html += '</tr>';
+                            }
+                            html += '</table></div>';
+                            var popup = new OpenLayers.Popup.FramedDDB(
+                                'ddbpopup',
+                                lonlat,
+                                new OpenLayers.Size(450, 350),
+                                html,
+                                null, //{size: {w: 14, h: 14}, offset: {x: -7, y: -7}},
+                                true,
+                                function(){
+                                    if (evt.feature.popup) {
+                                        self.selectControl.unselect(evt.feature);
+                                    }
+                                },
+                                "./static/img/"
+                            );
 
-                        evt.feature.popup = popup;
-                        DDB.map.addPopup(popup, true);
+                            evt.feature.popup = popup;
+                            DDB.map.addPopup(popup, true);
+                        }
                     }
-                },
-                featureunhighlighted: function(evt) {
-                    DDB.map.removePopup(evt.feature.popup);
-                },
-                featureselected: function(evt){
+                    else  {
+
+                        var html = '';
+
+                        if (l.length == 1) {
+                            html = $.ajax({
+                                url: DDB.globals['get_url'] +'/'+ l[0][0],
+                                data:{
+                                    'format':'html',
+                                },
+                                dataType: 'html',
+                                success: function(data){
+                                    $("#multi-details").empty().html(data)
+                                  $.mobile.navigate( "#popup" );
+
+                                }
+                            })
+                        } else {
+                            $("#multi-popup").find("h1").html('15 von '+l.length+ ' Ergebnissen');
+                            var html = "";
+
+                            for (i=0;i<15;i++){
+                                html += '<li><a href="'+ DDB.globals['apiitem_url'] + l[i][0] + '" target="_blank" class="label">' + l[i][1] + '</a></li>';
+
+                            }
+                            $("ul#multi-details-list").empty().append(html)//.listview("refresh");
+                            $.mobile.navigate( "#multi-popup" );
+                        }
+                    }
                 },
                 featureunselected: function(evt){
                     if(evt.feature.popup) {
@@ -182,14 +228,12 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
     },
     setMap : function(){
         OpenLayers.Control.prototype.setMap.apply(this, arguments);
-        this.map.addLayers([this.vector])
-        this.map.addLayers([this.searchBoxVector])
         this.map.events.on({
             "zoomend" : this.api_search,
             //"moveend": this.api_search,
             scope:this
         })
-        hoverControl = new OpenLayers.Control.SelectFeature([this.vector], {
+        this.hoverControl = new OpenLayers.Control.SelectFeature([this.vector], {
             hover : true,
             highlightOnly : true,
             renderIntent : "temporary",
@@ -206,9 +250,12 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
                 }
             }
         });
-        this.map.addControl(hoverControl);
-        hoverControl.activate();
-        var selectControl = new OpenLayers.Control.SelectFeature([this.vector], {
+
+        this.map.addLayers([this.vector])
+        this.map.addLayers([this.searchBoxVector])
+        this.map.addControl(this.hoverControl);
+        this.hoverControl.activate();
+        this.selectControl = new OpenLayers.Control.SelectFeature([this.vector], {
             clickout : true,
             toggle : false,
             multiple : true,
@@ -216,8 +263,8 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
             toggleKey : "ctrlKey", // ctrl key removes from selection
             multipleKey : "shiftKey" // shift key adds to selection
         });
-        this.map.addControl(selectControl);
-        selectControl.activate()
+        this.map.addControl(this.selectControl);
+        this.selectControl.activate()
 
     },
     rc:0,
@@ -246,9 +293,19 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
             params.query = $("#apisearchinput").val();
             params.filtercheckbox = $("#apisearchfiltercheck").prop('checked');
             params.filterdatum = $("#amount").val();
+            if (DDB.globals.mobile) {
+            params.filtercheckbox = false
+            params.filterdatum = "1 - 2011"
+            params.query = $("#ddbquery").val()
+            }
             var e = this.map.getExtent();
             params.bbox = e.left+","+e.bottom+","+e.right+","+e.top;
             params.format = "json"
+
+            params.radius = 60
+            if (DDB.globals.mobile) {
+                params.radius = 130
+            }
             var searchBox = new OpenLayers.Feature.Vector(
                                 OpenLayers.Geometry.fromWKT(
                                 "POLYGON(("+e.left+" "+e.bottom+","+e.left+" "+e.top+","+e.right+" "+e.top+","+e.right+" "+e.bottom+","+e.left+" "+e.bottom+"))"
@@ -274,8 +331,12 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
     },
     api_search_callback: function(d, rc){
         if (rc == this.rc) {
-            this.vector.removeAllFeatures()
-            this.vector.addFeatures(this.format.read(d))
+            this.selectControl.unselectAll();
+            this.vector.removeAllFeatures();
+            this.vector.addFeatures(this.format.read(d));
+            if (DDB.globals.mobile) {
+                $.mobile.navigate( "#mappage" );
+            }
         }
     },
 

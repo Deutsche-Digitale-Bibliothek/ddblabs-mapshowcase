@@ -21,4 +21,5 @@ DDB.globals = {
   minyear : 1,
   maxyear : 2011,
   ddb_arrow : "${request.route_url('static', subpath='img/ddb-arrow.png')}",
+  is_mobile : ${'true' if request.session.get('browserdetection', 'normal') == 'mobile' else 'false'}
 }
