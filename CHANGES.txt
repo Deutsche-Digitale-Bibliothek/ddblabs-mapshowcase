@@ -25,3 +25,10 @@
 
 - Added datasource files
 - Fixed GUI glitches
+
+0.4
+---
+
+- Added mobile page
+- Fixed mobile detection
+- Refactored popup window
