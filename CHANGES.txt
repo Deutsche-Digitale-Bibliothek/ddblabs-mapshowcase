@@ -32,3 +32,9 @@
 - Added mobile page
 - Fixed mobile detection
 - Refactored popup window
+
+0.5
+---
+
+- Added the new DDB API Logo
+- Added help texts
