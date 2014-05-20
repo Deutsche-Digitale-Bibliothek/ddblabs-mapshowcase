@@ -92,7 +92,7 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
                 featureselected: function(evt){
                     var f = arguments[0].feature
                     var l = f.data.ids
-                    if (self.selectedFeature) {
+                    if (self.selectedFeature && self.selectedFeature.layer) {
                         self.selectControl.unselect(self.selectedFeature);
                     }
                     var lonlat = new OpenLayers.LonLat(
