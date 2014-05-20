@@ -92,7 +92,9 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
                 featureselected: function(evt){
                     var f = arguments[0].feature
                     var l = f.data.ids
-
+                    if (self.selectedFeature) {
+                        self.selectControl.unselect(self.selectedFeature);
+                    }
                     var lonlat = new OpenLayers.LonLat(
                                 evt.feature.geometry.x,
                                 evt.feature.geometry.y
@@ -191,6 +193,7 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
                             $.mobile.navigate( "#multi-popup" );
                         }
                     }
+                    self.selectedFeature = f;
                 },
                 featureunselected: function(evt){
                     if(evt.feature.popup) {
