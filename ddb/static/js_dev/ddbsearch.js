@@ -39,7 +39,6 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
             " - " + $("#slider-range").slider("values", 1));
         var self = this;
         $("#search_form").submit(function(){
-            $('#ajax-loader').fadeIn(50);
             self.api_search.call(self);
             return false;
         })
@@ -223,14 +222,11 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
         })
         this.format = new OpenLayers.Format.GeoJSON({
         });
-
-
     },
     setMap : function(){
         OpenLayers.Control.prototype.setMap.apply(this, arguments);
         this.map.events.on({
             "zoomend" : this.api_search,
-            //"moveend": this.api_search,
             scope:this
         })
         this.hoverControl = new OpenLayers.Control.SelectFeature([this.vector], {
@@ -279,7 +275,6 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
         window.setTimeout(
             function(){
                 if (rc == self.rc){
-
                     self._api_search.call(self, rc, isEvent)
                 }
             }, 50
@@ -287,7 +282,6 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
     },
     last_params : null,
     _api_search: function(rc, isEvent){
-
         var params = {}
         if (!isEvent) {
             params.query = $("#apisearchinput").val();
@@ -323,10 +317,9 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
         }
         params.resolution = this.map.getResolution();
         var self = this;
-
+        $('#ajax-loader').fadeIn(50);
         $.get(DDB.globals.search_url, params, function(data){
             self.api_search_callback.call(self, data, rc)
-            $('#ajax-loader').fadeOut(50);
         })
     },
     api_search_callback: function(d, rc){
@@ -334,6 +327,7 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
             this.selectControl.unselectAll();
             this.vector.removeAllFeatures();
             this.vector.addFeatures(this.format.read(d));
+            $('#ajax-loader').fadeOut(50);
             if (DDB.globals.mobile) {
                 $.mobile.navigate( "#mappage" );
             }

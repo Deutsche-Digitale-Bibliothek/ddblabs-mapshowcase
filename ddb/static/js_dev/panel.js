@@ -26,7 +26,6 @@ function initialize_panel() {
         'background' : 'white',
     });
 
-
     $("#panel_switch").click(function() {
         $("#panel_switch").hide();
         $("#panel").toggle("slide", 400, function() {
@@ -101,6 +100,4 @@ function initialize_panel() {
             return false;
         }
     });
-
-
 }
