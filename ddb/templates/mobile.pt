@@ -41,9 +41,7 @@
           </div>
 
           <div data-role="footer">
-            <a href="#searchpage" class="ui-btn ui-icon-search ui-btn-icon-left">Search</a>
-            <!--<a href="#" id="locate" class="ui-btn ui-icon-mobile-locate ui-btn-icon-left">Locate</a>-->
-            <a href="#layerspage" class="ui-btn ui-icon-mobile-layers ui-btn-icon-left" data-role="button">Layers</a>
+            <a href="#searchpage" class="ui-btn ui-icon-search ui-btn-icon-left">Suche</a>
             <a href="#impressum" class="ui-btn ui-icon-info ui-btn-icon-left" data-role="button">Impressum</a>
             
           </div>
