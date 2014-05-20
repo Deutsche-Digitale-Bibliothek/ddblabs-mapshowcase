@@ -53,40 +53,6 @@ function initialize_panel() {
         'left' : '310px'
     }).show();
 
-
-    $("#toogle-osm-mapnick").prop('checked', true).on('click', function() {
-        if ($(this).is(':checked')) {
-            DDB.osm.setVisibility(true);
-            DDB.osmworld.setVisibility(false);
-            $("#toogle-osm-worldwide").prop('checked', false);
-
-        } else {
-            DDB.osm.setVisibility(false);
-            DDB.osmworld.setVisibility(true);
-            $("#toogle-osm-worldwide").prop('checked', true);
-        }
-    });
-
-    $("#toogle-osm-worldwide").prop('checked', false).on('click', function() {
-        if ($(this).is(':checked')) {
-            DDB.osmworld.setVisibility(true);
-            DDB.osm.setVisibility(false);
-            $("#toogle-osm-mapnick").prop('checked', false)
-        } else {
-            DDB.osm.setVisibility(true);
-            DDB.osmworld.setVisibility(false);
-            $("#toogle-osm-mapnick").prop('checked', true)
-        }
-    });
-
-    $("#toogle-osm-hillshade").prop('checked', false).on('click', function() {
-        if ($(this).is(':checked')) {
-            DDB.hillshade.setVisibility(true);
-        } else {
-            DDB.hillshade.setVisibility(false);
-        }
-    });
-
     $("#nominatiminput").keypress(function(e) {
         if (e.which == 13) {
             $("#search-places").click();

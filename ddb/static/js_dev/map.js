@@ -89,30 +89,6 @@ function initialize_map() {
     })
     DDB.map.addLayer(DDB.poivectorlayer);
     DDB.map.setCenter(DDB.center, 8);
-    DDB.hillshade = new OpenLayers.Layer.WMS(
-        "Hillshade",
-        "http://129.206.228.72/cached/hillshade",
-        {
-            "layers": "europe_wms:hs_srtm_europa",
-            "transparent":"true",
-            "format":"image/png",
-        },{
-            isBaseLayer:false,
-            displayInLayerSwitcher:true
-        }
-    )
-    DDB.hillshade.setOpacity(0.23);
-    DDB.hillshade.setVisibility(false);
-    DDB.map.addLayer(DDB.hillshade);
-    DDB.osmworld = new OpenLayers.Layer.WMS(
-        "OSM - Worldwide",
-        "http://129.206.228.72/cached/osm",
-        {
-            layers: "osm_auto:all",
-            isBaseLayer:true
-        }
-    )
-    DDB.osmworld.setVisibility(false);
-    DDB.map.addLayer(DDB.osmworld);
+
 
 }

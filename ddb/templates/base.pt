@@ -128,14 +128,6 @@
                             </div>
 
                         </div>
-                        <h3>Karteneinstellungen</h3>
-                        <div class="button-list">
-                            <input type="checkbox" id="toogle-osm-mapnick"/><label for="toogle-osm-mapnick">DDB-Kartenserver - (OSM Mapnik)</label>
-                            <br />
-                            <input type="checkbox" id="toogle-osm-worldwide"/><label for="toogle-osm-worldwide">OpenStreetMap - Worldwide</label>
-                            <br />
-                            <input type="checkbox" id="toogle-osm-hillshade"/><label for="toogle-osm-hillshade">OpenStreetMap - Hillshade</label>
-                        </div>
                         <h3>Impressum</h3>
                         <div>
                             Sie finden unser Impressum unter folgendem Link: <br /><a href="http://www.webgis.de/impressum">http://www.webgis.de/impressum</a>
