@@ -88,6 +88,19 @@ function initialize_panel() {
         }
     });
 
+    $("#nominatiminput").keypress(function(e) {
+        if (e.which == 13) {
+            $("#search-places").click();
+            return false;
+        }
+    });
+
+    $("#apisearchinput").keypress(function(e) {
+        if (e.which == 13) {
+            $("#search_form").submit();
+            return false;
+        }
+    });
 
 
 }
