@@ -1,4 +1,4 @@
-<!--
+/*
 // Copyright 2014 in medias res Gesellschaft fuer Informationstechnologie mbH
 // The ddb project licenses this file to you under the Apache License,
 // version 2.0 (the "License"); you may not use this file except in compliance
@@ -11,7 +11,7 @@
 // WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 // License for the specific language governing permissions and limitations
 // under the License.
--->
+*/
 
 $(function() {
     $("#nominatimresultlist").on( 'click', ".nominatim-listitem", function() {

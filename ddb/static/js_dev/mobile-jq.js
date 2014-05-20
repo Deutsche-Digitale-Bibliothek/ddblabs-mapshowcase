@@ -1,3 +1,18 @@
+/*
+// Copyright 2014 in medias res Gesellschaft fuer Informationstechnologie mbH
+// The ddb project licenses this file to you under the Apache License,
+// version 2.0 (the "License"); you may not use this file except in compliance
+// with the License. You may obtain a copy of the License at:
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+// WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+// License for the specific language governing permissions and limitations
+// under the License.
+*/
+
 // Start with the map page
 window.location.replace(window.location.href.split("#")[0] + "#mappage");
 
@@ -37,19 +52,19 @@ function fixContentHeight() {
 }
 $(function(){
     // one-time initialisation of button handlers
-    
+
     $("#plus").on('click', function(){
         //DDB.map.zoomIn.call(DDB.map);
         DDB.map.setCenter(null, DDB.map.getZoom()+1);
-        var zoom = DDB.map.getZoom() + 1//(DDB.map.getNumZoomLevels() - 1) - levels; 
+        var zoom = DDB.map.getZoom() + 1//(DDB.map.getNumZoomLevels() - 1) - levels;
         zoom = Math.min(Math.max(zoom, 0), DDB.map.getNumZoomLevels() - 1);
         DDB.map.zoomTo(zoom);
     });
-    
+
     $("#minus").on('click', function(){
         DDB.map.zoomOut.call(DDB.map);
     });
-    
+
     $("#locate").on('click',function(){
         var control = DDB.map.getControlsBy("id", "locate-control")[0];
         if (control.active) {
@@ -58,16 +73,16 @@ $(function(){
             control.activate();
         }
     });
-    
+
     //fix the content height AFTER jQuery Mobile has rendered the map page
     $('#mappage').on('pageshow',function (){
         fixContentHeight();
     });
-    
+
     $(window).bind("orientationchange resize pageshow", fixContentHeight);
-    
-    
-    
+
+
+
     /*$('#popup').on('pageshow',function(event, ui){
         var li = "";
         for(var attr in selectedFeature.attributes){
@@ -76,7 +91,7 @@ $(function(){
         }
         $("ul#details-list").empty().append(li).listview("refresh");
     });*/
-    
+
     $('#search_places').on('click',function(event, ui){
         $('#search_results').empty();
         if ($('#query')[0].value === '') {
