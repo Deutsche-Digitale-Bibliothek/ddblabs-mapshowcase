@@ -26,7 +26,7 @@ function initialize_map() {
     })
     window.nominatimController = DDB.nominatimController
     DDB.osm = new OpenLayers.Layer.OSM(
-        "DDB Karte", [
+        "DDB-Kartenserver (OSM Mapnik)", [
             "http://a.tile.maps.deutsche-digitale-bibliothek.de/${z}/${x}/${y}.png",
             "http://maps.deutsche-digitale-bibliothek.de/${z}/${x}/${y}.png"
         ],

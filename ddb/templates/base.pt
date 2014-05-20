@@ -130,7 +130,7 @@
                         </div>
                         <h3>Karteneinstellungen</h3>
                         <div class="button-list">
-                            <input type="checkbox" id="toogle-osm-mapnick"/><label for="toogle-osm-mapnick">OpenStreetMap - Mapnick</label>
+                            <input type="checkbox" id="toogle-osm-mapnick"/><label for="toogle-osm-mapnick">DDB-Kartenserver - (OSM Mapnik)</label>
                             <br />
                             <input type="checkbox" id="toogle-osm-worldwide"/><label for="toogle-osm-worldwide">OpenStreetMap - Worldwide</label>
                             <br />
