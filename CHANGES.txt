@@ -38,3 +38,21 @@
 
 - Added the new DDB API Logo
 - Added help texts
+
+0.6
+---
+
+- Fixed: mobile search -> suche. Removed layer button.
+- Fixed: mobile listview refresh for global design.
+- Disabled external layers
+- Fixed do not unselect deleted features
+- Refactored popup styling
+- Fixed overlapping cluster calculation.
+- Fixed navigation panzoombar css.
+- Fixed cluster markers to be reclickable
+- Fixed loading gif during zoom event
+- Added search on enter keypress
+- Fixed different naming of DDB Layer
+- Fixed arrow orientation in resultlist popupdiv
+- Fixed cursor css style on nominatim result list
+- Fixed wrong comment style on js files, breaking IE
