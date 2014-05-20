@@ -17,14 +17,18 @@
     <table>
         <tbody>
             <tr>
+                <td colspan="3" class="olPopupDDBHeader">&nbsp;</td>
+            </tr>
+            <tr>
                 <td colspan="2"><h1 tal:content="structure: item.title"></h1></td>
-                <td><img tal:condition="exists: thumbnail" tal:condition="python: thumbnail != None" tal:attributes="src u'https://www.deutsche-digitale-bibliothek.de/' + thumbnail" src="" /></td>
+                <td rowspan="3"><img tal:condition="exists: thumbnail" tal:condition="python: thumbnail != None" tal:attributes="src u'https://www.deutsche-digitale-bibliothek.de/' + thumbnail" src="" /></td>
             </tr>
             <tr>
-                <td colspan="3"><p tal:content="structure: item.label"></p></td>
+                <td colspan="2"><p tal:content="structure: item.label"></p></td>
             </tr>
             <tr>
-                <td><img src="${request.route_url('static', subpath='img/ddb-arrow.png')}" /></td><td><a tal:attributes="href 'https://www.deutsche-digitale-bibliothek.de/item/' + item.id" target="_blank"> zum Objekt</a></td><td>&nbsp;</td>
+                <td class="olPopupDDBLink">&nbsp;</td>
+                <td><a tal:attributes="href 'https://www.deutsche-digitale-bibliothek.de/item/' + item.id" target="_blank"> zum Objekt</a></td>
             </tr>
         </tbody>
     </table>
