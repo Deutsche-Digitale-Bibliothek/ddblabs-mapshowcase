@@ -72,7 +72,7 @@
               { //bottom-right
                   size: new OpenLayers.Size(25, 25),
                   anchor: new OpenLayers.Bounds(null, 5, 20, null), //left, bottom, right, top
-                  position: new OpenLayers.Pixel(0, 0)
+                  position: new OpenLayers.Pixel(-10, -5)
               },
               { // stem
                   size: new OpenLayers.Size(0, 0),
@@ -123,8 +123,8 @@
                 },
                 { //top-right
                     size: new OpenLayers.Size(25, 'auto'),
-                    anchor: new OpenLayers.Bounds(null, 20, 22, 0), //left, bottom, right, top
-                    position: new OpenLayers.Pixel(0, 0)
+                    anchor: new OpenLayers.Bounds(null, 20, 20, 0), //left, bottom, right, top
+                    position: new OpenLayers.Pixel(-8, 0)
                 },
                 { //bottom-left
                     size: new OpenLayers.Size('auto', 21),

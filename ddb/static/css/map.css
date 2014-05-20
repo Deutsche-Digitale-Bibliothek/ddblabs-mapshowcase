@@ -1,5 +1,3 @@
-
-
 html, body, #map {
     width: 100%;
     height: 100%;
@@ -125,7 +123,6 @@ h1 {
    font-size:1.2em;
 }
 
-
 /* Popup start */
 
 .olMap img {
@@ -161,6 +158,11 @@ h1 {
 .olMap .olPopupDDBBody {
   margin-top: 5px;
   padding-bottom: 5px;
+}
+
+.olMap .olPopupDDBArrow {
+    background: url("../img/ddb-arrow.png") no-repeat scroll 0 -1px !important;
+    padding-right: 5px;
 }
 
 .olMap .olPopupDDBScroll {

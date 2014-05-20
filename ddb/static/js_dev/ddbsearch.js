@@ -113,7 +113,7 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
                                 var popup = new OpenLayers.Popup.FramedDDB(
                                     'ddbpopup',
                                     lonlat,
-                                    new OpenLayers.Size(450, 350),
+                                    new OpenLayers.Size(450, 450),
                                     data,
                                     null, //{size: {w: 14, h: 14}, offset: {x: -7, y: -7}},
                                     true,
@@ -139,7 +139,7 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
                                     break;
                                 }
                                 html += '<tr>';
-                                html += '<td><img src="'+ DDB.globals['ddb_arrow'] +'" /></td>';
+                                html += '<td class="olPopupDDBArrow">&nbsp;</td>';
                                 html += '<td><a href="'+ DDB.globals['apiitem_url'] + l[i][0] + '" target="_blank" class="label">' + l[i][1] + '</a></td>';
                                 html += '</tr>';
                             }
@@ -147,7 +147,7 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
                             var popup = new OpenLayers.Popup.FramedDDB(
                                 'ddbpopup',
                                 lonlat,
-                                new OpenLayers.Size(450, 350),
+                                new OpenLayers.Size(450, 450),
                                 html,
                                 null, //{size: {w: 14, h: 14}, offset: {x: -7, y: -7}},
                                 true,
