@@ -176,20 +176,27 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
                                 },
                                 dataType: 'html',
                                 success: function(data){
-                                    $("#multi-details").empty().html(data)
+                                    $("#multi-details").empty().html(data);
                                   $.mobile.navigate( "#popup" );
 
                                 }
                             })
                         } else {
-                            $("#multi-popup").find("h1").html('15 von '+l.length+ ' Ergebnissen');
+                            $("#multi-popup").find("h1").html(Math.min(15, l.length)+' von '+l.length+ ' Ergebnissen');
                             var html = "";
 
-                            for (i=0;i<15;i++){
+                            for (i=0;i<Math.min(15, l.length);i++){
                                 html += '<li><a href="'+ DDB.globals['apiitem_url'] + l[i][0] + '" target="_blank" class="label">' + l[i][1] + '</a></li>';
 
                             }
-                            $("ul#multi-details-list").empty().append(html)//.listview("refresh");
+                            $("ul#multi-details-list").html("")
+                            $("ul#multi-details-list").append(html);
+                            try{
+                                $("ul#multi-details-list").listview("refresh");
+                            }
+                            catch(err){
+                                    
+                            }
                             $.mobile.navigate( "#multi-popup" );
                         }
                     }
