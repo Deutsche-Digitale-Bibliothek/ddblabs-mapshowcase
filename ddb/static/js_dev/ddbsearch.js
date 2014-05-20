@@ -116,7 +116,7 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
                                     lonlat,
                                     new OpenLayers.Size(450, 450),
                                     data,
-                                    null, //{size: {w: 14, h: 14}, offset: {x: -7, y: -7}},
+                                    null,
                                     true,
                                     function(){
                                         if (evt.feature.popup) {
@@ -150,7 +150,7 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
                                 lonlat,
                                 new OpenLayers.Size(450, 450),
                                 html,
-                                null, //{size: {w: 14, h: 14}, offset: {x: -7, y: -7}},
+                                null,
                                 true,
                                 function(){
                                     if (evt.feature.popup) {
@@ -195,7 +195,7 @@ DDB.Search = OpenLayers.Class(OpenLayers.Control, {
                                 $("ul#multi-details-list").listview("refresh");
                             }
                             catch(err){
-                                    
+
                             }
                             $.mobile.navigate( "#multi-popup" );
                         }

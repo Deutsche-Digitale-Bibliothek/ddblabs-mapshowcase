@@ -42,9 +42,6 @@ function initialize_map() {
         div: document.getElementById("map"),
         controls: [
             new OpenLayers.Control.Navigation({
-                /*dragPanOptions: {
-                    enableKinetic: false
-                }*/
             }),
             new OpenLayers.Control.Attribution(),
             DDB.nominatimController,
@@ -59,7 +56,6 @@ function initialize_map() {
         units: 'm'
     });
     DDB.map.updateSize()
-    //  alert(DDB.map.layers.length);
     DDB.map.addControl(new DDB.Search({div:document.getElementById("ddbsearch")}))
     if (!DDB.globals.mobile) {
         DDB.map.addControls([

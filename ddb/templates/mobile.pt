@@ -27,14 +27,10 @@
         <link rel="stylesheet" href="${request.route_url('static', subpath='css/style.mobile-jq.css')}" type="text/css" />
     </head>
     <body>
-        <h1 id="title">OpenLayers with jQuery Mobile</h1>
+        <h1 id="title">DDB Api Showcase mobile</h1>
         <div id="tags">
-          mobile, jquery
+          mobile, jquery, ddb
         </div>
-        <p id="shortdesc">
-          Using jQuery Mobile to display an OpenLayers map.
-        </p>
-
         <div data-role="page" id="mappage">
           <div id="mappwrapper" data-role="content">
             <div id="map"></div>
@@ -43,7 +39,7 @@
           <div data-role="footer">
             <a href="#searchpage" class="ui-btn ui-icon-search ui-btn-icon-left">Suche</a>
             <a href="#impressum" class="ui-btn ui-icon-info ui-btn-icon-left" data-role="button">Impressum</a>
-            
+
           </div>
           <div id="navigation" data-role="controlgroup">
             <a href="#" class="ui-btn ui-icon-plus ui-btn-icon-notext ui-corner-all" id="plus">+</a>
@@ -63,7 +59,7 @@
             <input type="search" name="query" id="query"
                    value="" placeholder="Suche nach Orten"
                    autocomplete="off"/>
-            
+
             <a href="#" id="search_places" class="ui-btn ui-icon-search ui-btn-icon-left">Absenden</a>
           </div>
           <ul data-role="listview" data-inset="true" id="search_results"></ul>
@@ -102,7 +98,7 @@
                 <h1>Details</h1>
             </div>
             <div data-theme="c" data-role="content" id="multi-details">
-                
+
             </div>
         </div>
     </body>
