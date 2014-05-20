@@ -4,6 +4,8 @@
 }
 #nominatimresultlist li {
     border-bottom: 1px solid red;
+    cursor:pointer;
+    cursor:hand;
 }
 
 #ajax-loader {
