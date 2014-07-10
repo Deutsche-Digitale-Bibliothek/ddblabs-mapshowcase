@@ -19,7 +19,7 @@ API showcase for a map-based search
 - import the generated or sample SQL (database-sample.sql) into the new database
 - create a python virtual environment
     - virtualenv $venvpath
-- $venvpath/bin/pip install <directory containing this file>
+- $venvpath/bin/pip install \<directory containing this file\>
 - edit the $configfile (development.ini/production.ini)
     - change your sqlalchemy.url parameter to match you local DB environment
     - enter your DDB API OAuthkey
