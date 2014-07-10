@@ -21,17 +21,17 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
     'pyramid==1.4.5',
-    'SQLAlchemy',
-    'transaction',
-    'pyramid_tm',
-    'zope.sqlalchemy',
-    'waitress',
-    'psycopg2',
-    'requests',
-    'httpagentparser',
-    'pyramid_beaker',
-    'geoalchemy2',
-    'sphinx'
+    'SQLAlchemy==0.9.3',
+    'transaction==1.4.3',
+    'pyramid_tm==0.7',
+    'zope.sqlalchemy==0.7.4',
+    'waitress==0.8.8',
+    'psycopg2==2.5.2',
+    'requests==2.2.1',
+    'httpagentparser==1.6.0',
+    'pyramid_beaker==0.8',
+    'geoalchemy2==0.2.3',
+    'sphinx==1.2.2'
     ]
 
 setup(name='ddb',
